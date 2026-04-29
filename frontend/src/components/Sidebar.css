@@ -1,6 +1,6 @@
-/* frontend/src/components/Sidebar.css */
 .sidebar {
   width: 260px;
+  min-width: 260px;
   background: #1e1e2d;
   color: white;
   padding: 20px;

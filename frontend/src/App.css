@@ -1,13 +1,13 @@
 .app-layout {
-  display: flex; /* Coloca Sidebar e Content lado a lado */
+  display: flex;
   width: 100%;
   min-height: 100vh;
 }
 
 .content {
-  flex-grow: 1; /* Faz o Dashboard ocupar o resto da tela */
-  background-color: var(--bg-white);
-  color: #ffffff;
+  flex: 1;
+  background-color: #f5f5f5;
+  color: #333;
   padding: 40px;
   overflow-y: auto;
 }
