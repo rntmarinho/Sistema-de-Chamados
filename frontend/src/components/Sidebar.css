@@ -1,0 +1,42 @@
+/* frontend/src/components/Sidebar.css */
+.sidebar {
+  width: 260px;
+  background: #1e1e2d;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #a2a3b7;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.nav-item.active, .nav-item:hover {
+  background: #2b2b40;
+  color: white;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  color: #fb8c00;
+  cursor: pointer;
+  padding: 12px;
+  width: 100%;
+}
