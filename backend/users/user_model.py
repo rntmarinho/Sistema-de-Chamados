@@ -67,3 +67,16 @@ def delete_user(user_id):
     cursor.execute("DELETE FROM tbl_users WHERE id = ?", (user_id,))
     conn.commit()
     conn.close()
+
+def verify_user(usuario, senha):
+    conn = get_db_connection()
+    # row_factory permite que o resultado venha como um dicionário
+    conn.row_factory = sqlite3.Row 
+    cursor = conn.cursor()
+    
+    # Busca o usuário pelo login e senha
+    cursor.execute("SELECT * FROM tbl_users WHERE usuario = ? AND senha = ?", (usuario, senha))
+    user = cursor.fetchone()
+    
+    conn.close()
+    return user
