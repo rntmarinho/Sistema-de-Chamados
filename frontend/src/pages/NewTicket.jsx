@@ -6,11 +6,12 @@ import './NewTicket.css';
 const NewTicket = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    assunto: '',
-    descricao: '',
-    prioridade: 'baixa',
-    categoria: 'suporte'
-  });
+  assunto: '',
+  descricao: '',
+  prioridade: 'baixa',
+  categoria: 'suporte',
+  status: 'aberto' // Adicione este campo com o valor padrão
+});
 
   const handleSubmit = async (e) => {
     e.preventDefault();

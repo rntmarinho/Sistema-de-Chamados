@@ -13,7 +13,7 @@ const Sidebar = () => {
           <PlusCircle size={20} /> Abrir Chamado
         </a>
         <a href="/tickets" className="nav-item">
-          <Ticket size={20} /> Chamados
+          <Ticket size={20} /> Todos os Chamados
         </a>
         <a href="/users" className="nav-item">
           <Users size={20} /> Usuários
