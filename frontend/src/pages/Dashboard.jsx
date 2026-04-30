@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { Plus } from 'lucide-react'; 
+import { Link } from 'react-router-dom';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -25,9 +27,18 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <header>
-        <h1>Bem-vindo ao Sistema de Chamados</h1>
-        <p>Olá! Aqui está o resumo das atividades de hoje.</p>
+        <div>
+          <h1>Bem-vindo ao Sistema de Chamados</h1>
+          <p>Olá! Aqui está o resumo das atividades de hoje.</p>
+        </div>       
       </header>
+
+      <div>
+        <Link to="/novo-chamado" className="btn-primary">
+          <Plus size={18} /> Abrir Novo Chamado
+        </Link>
+      </div>
+      
 
       <section className="stats-cards">
         <div className="card"><h3>{stats.aberto}</h3><p>Em Aberto</p></div>

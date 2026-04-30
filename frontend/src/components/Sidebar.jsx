@@ -1,4 +1,4 @@
-import { LayoutDashboard, Ticket, Users, LogOut } from 'lucide-react';
+import { LayoutDashboard, Ticket, Users, LogOut, PlusCircle } from 'lucide-react';
 import './Sidebar.css';
 
 const Sidebar = () => {
@@ -8,6 +8,9 @@ const Sidebar = () => {
       <nav>
         <a href="/" className="nav-item active">
           <LayoutDashboard size={20} /> Painel Inicial
+        </a>
+        <a href="/novo-chamado" className="nav-item">
+          <PlusCircle size={20} /> Abrir Chamado
         </a>
         <a href="/tickets" className="nav-item">
           <Ticket size={20} /> Chamados

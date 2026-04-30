@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  color: #a2a3b7;
+  color: #ffffff;
   text-decoration: none;
   padding: 12px;
   border-radius: 8px;
@@ -33,7 +33,7 @@
 }
 
 .nav-item.active, .nav-item:hover {
-  background: #2b2b40;
+  background: #21967d;
   color: white;
 }
 

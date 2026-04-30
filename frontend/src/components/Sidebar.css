@@ -1,7 +1,7 @@
 .sidebar {
   width: 260px;
   min-width: 260px;
-  background: #1e1e2d;
+  background: #21967d;
   color: white;
   padding: 20px;
   display: flex;
@@ -21,7 +21,7 @@
 }
 
 .nav-item.active, .nav-item:hover {
-  background: #2b2b40;
+  background: #21967d;
   color: white;
 }
 
@@ -35,7 +35,7 @@
   gap: 12px;
   background: none;
   border: none;
-  color: #fb8c00;
+  color: #21967d;
   cursor: pointer;
   padding: 12px;
   width: 100%;
