@@ -1,6 +1,6 @@
 # backend/tickets/ticket_controller.py
 from flask import Blueprint, request, jsonify
-from tickets.backend.tickets.ticket_service import create_ticket_service, get_all_tickets_service, get_ticket_service, update_ticket_service, delete_ticket_service
+from tickets.ticket_service import create_ticket_service, get_all_tickets_service, get_ticket_service, update_ticket_service, delete_ticket_service
 
 # Criação do Blueprint para o controlador de tickets
 ticket_controller = Blueprint('ticket_controller', __name__)

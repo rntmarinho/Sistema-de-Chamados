@@ -1,5 +1,5 @@
 # backend/users/user_model.py
-from tickets.backend.database.conect_database import get_db_connection
+from database.conect_database import get_db_connection
 
 # Função para criar um novo usuário
 def create_user(user_data):

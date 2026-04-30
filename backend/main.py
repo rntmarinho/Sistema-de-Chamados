@@ -1,7 +1,7 @@
 # backend/app.py
 from flask import Flask
-from tickets.backend.tickets.ticket_controller import ticket_controller
-from tickets.backend.users.user_controller import user_controller
+from tickets.ticket_controller import ticket_controller
+from users.user_controller import user_controller
 
 app = Flask(__name__)
 

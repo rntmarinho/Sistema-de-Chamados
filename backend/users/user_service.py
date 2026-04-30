@@ -1,5 +1,5 @@
 # backend/users/user_service.py
-from tickets.backend.users.user_model import create_user, get_user_by_id, get_all_users, update_user, delete_user
+from backend.users.user_model import create_user, get_user_by_id, get_all_users, update_user, delete_user
 
 # Função para criar um novo usuário
 def create_user_service(user_data):

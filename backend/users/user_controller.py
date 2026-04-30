@@ -1,6 +1,6 @@
 # backend/users/user_controller.py
 from flask import Blueprint, request, jsonify
-from tickets.backend.users.user_service import create_user_service, get_user_service
+from users.user_service import create_user_service, get_user_service
 
 # Criação do Blueprint para o controlador de usuários
 user_controller = Blueprint('user_controller', __name__)

@@ -1,5 +1,5 @@
 # backend/tickets/ticket_service.py
-from tickets.backend.tickets.ticket_model import create_ticket, get_all_tickets, get_ticket_by_id, update_ticket, delete_ticket
+from tickets.ticket_model import create_ticket, get_all_tickets, get_ticket_by_id, update_ticket, delete_ticket
 
 # Lógica para criar um ticket
 def create_ticket_service(ticket_data):
