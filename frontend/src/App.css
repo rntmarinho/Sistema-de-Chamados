@@ -67,3 +67,43 @@
   text-align: left;
   border-bottom: 1px solid #eee;
 }
+
+/* Layout base para separar Sidebar do Conteúdo */
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  background-color: #f8f9fa;
+  padding: 20px 40px;
+  position: relative;
+}
+
+/* Alinhamento da barra superior */
+.top-bar {
+  display: flex;
+  justify-content: flex-end; /* Empurra o botão para a direita */
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+/* Estilo do botão Sair moderno */
+.logout-btn-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #21967d; /* Cor preta padrão do seu sistema */
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.logout-btn-top:hover {
+  opacity: 0.8;
+}

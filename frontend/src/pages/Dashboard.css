@@ -9,6 +9,9 @@
   margin: 20px 0;
 }
 
+.titulo{
+  color: #000;
+}
 .card {
   background: white;
   padding: 20px;
@@ -59,6 +62,7 @@
   min-width: 120px;      /* Define uma largura mínima para não ficar "esmagado" */
   max-width: 180px;      /* Garante que ele nunca fique muito largo */
 }
+
 
 .btn-primary:hover {
   background-color: #333; /* Cinza escuro ao passar o mouse */

@@ -1,0 +1,150 @@
+.all-tickets-container {
+  padding: 2rem;
+}
+
+.tickets-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 20px;
+}
+
+.header-info h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.header-info p {
+  color: #070707;
+  margin: 5px 0 0 0;
+}
+
+/* Caixa de Pesquisa */
+.search-box {
+  position: relative;
+  width: 400px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #030303;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  background-color: #c0baba;
+}
+
+.search-box input:focus {
+  outline: none;
+  background-color: #000;
+  border-color: #000;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+}
+
+/* Tabela */
+.table-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  overflow: hidden;
+}
+
+.tickets-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.tickets-table th {
+  background-color: #f8f9fa;
+  padding: 15px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #666;
+  border-bottom: 2px solid #eee;
+}
+
+.tickets-table td {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+.id-col { font-weight: 700; color: #888; }
+
+.subject-col { display: flex; flex-direction: column; gap: 4px; }
+
+.category-tag {
+  font-size: 0.75rem;
+  background: #f0f0f0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Badges de Prioridade */
+.priority-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.priority-badge.alta { color: #d32f2f; }
+.priority-badge.media { color: #f57c00; }
+.priority-badge.baixa { color: #388e3c; }
+
+/* Status Pills */
+.status-pill {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-pill.aberto { background: #e3f2fd; color: #1976d2; }
+.status-pill.em-atendimento { background: #fff3e0; color: #f57c00; }
+.status-pill.fechado { background: #e8f5e9; color: #388e3c; }
+
+.date-cell, .user-info-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.btn-view {
+  text-decoration: none;
+  background: #000;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: opacity 0.2s;
+}
+
+.btn-view:hover { opacity: 0.8; }
+
+.no-results {
+  padding: 40px;
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}

@@ -1,28 +1,38 @@
-import { LayoutDashboard, Ticket, Users, LogOut, PlusCircle } from 'lucide-react';
+import { LayoutDashboard, Ticket, Users, PlusCircle, BarChart3 } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
 const Sidebar = () => {
+  const location = useLocation();
+
+  // Função simples para verificar se a rota está ativa e aplicar a classe CSS
+  const isActive = (path) => location.pathname === path ? "nav-item active" : "nav-item";
+
   return (
     <div className="sidebar">
       <h2>Sistema de Chamados</h2>
       <nav>
-        <a href="/" className="nav-item active">
+        <Link to="/" className={isActive("/")}>
           <LayoutDashboard size={20} /> Painel Inicial
-        </a>
-        <a href="/novo-chamado" className="nav-item">
+        </Link>
+        
+        <Link to="/novo-chamado" className={isActive("/novo-chamado")}>
           <PlusCircle size={20} /> Abrir Chamado
-        </a>
-        <a href="/tickets" className="nav-item">
+        </Link>
+
+        {/* Rota padronizada para /tickets */}
+        <Link to="/tickets" className={isActive("/tickets")}>
           <Ticket size={20} /> Todos os Chamados
-        </a>
-        <a href="/users" className="nav-item">
+        </Link>
+
+        <Link to="/users" className={isActive("/users")}>
           <Users size={20} /> Usuários
-        </a>
-        <a href="/reports" className="nav-item">
-          <Users size={20} /> Relatorios
-        </a>
+        </Link>
+
+        <Link to="/reports" className={isActive("/reports")}>
+          <BarChart3 size={20} /> Relatórios
+        </Link>
       </nav>
-      
     </div>
   );
 };

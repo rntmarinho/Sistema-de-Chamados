@@ -33,11 +33,7 @@ const Dashboard = () => {
         </div>       
       </header>
 
-      <div>
-        <Link to="/novo-chamado" className="btn-primary">
-          <Plus size={18} /> Abrir Novo Chamado
-        </Link>
-      </div>
+      
       
 
       <section className="stats-cards">
@@ -46,8 +42,17 @@ const Dashboard = () => {
         <div className="card success"><h3>{stats.fechado}</h3><p>Fechados</p></div>
       </section>
 
+      
+      <div>
+        <Link to="/novo-chamado" className="btn-primary">
+          <Plus size={18} /> Abrir Novo Chamado
+        </Link>
+      </div>
+
+      <br></br>
+
       <section className="tickets-table-section">
-        <h2>Chamados Recentes (Em Aberto)</h2>
+        <h2 className='titulo'>Chamados Recentes (Em Aberto)</h2>
         <table className="custom-table">
           <thead>
             <tr>
