@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Ticket, Calendar, AlertCircle, User, Filter } from 'lucide-react';
-import './AllTickets.css';
+import './styles/AllTickets.css';
 
 const AllTickets = () => {
   const [tickets, setTickets] = useState([]);

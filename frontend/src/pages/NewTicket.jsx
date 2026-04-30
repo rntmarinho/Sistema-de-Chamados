@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, ArrowLeft, Info, Users } from 'lucide-react';
-import './NewTicket.css';
+import './styles/NewTicket.css';
 
 const NewTicket = () => {
   const navigate = useNavigate();

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserPlus, ArrowLeft } from 'lucide-react';
-import './CreateUser.css';
+import './styles/CreateUser.css';
 
 const CreateUser = () => {
   const navigate = useNavigate();

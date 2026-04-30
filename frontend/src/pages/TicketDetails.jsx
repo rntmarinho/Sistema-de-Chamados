@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Calendar, User, Info, Tag, AlertCircle, Clock } from 'lucide-react';
-import './TicketDetails.css';
+import './styles/TicketDetails.css';
 
 const TicketDetails = () => {
   const { id } = useParams();

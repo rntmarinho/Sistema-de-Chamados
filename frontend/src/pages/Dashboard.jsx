@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react'; 
 import { Link } from 'react-router-dom';
-import './Dashboard.css';
+import './styles/Dashboard.css';
 
 const Dashboard = () => {
   const [tickets, setTickets] = useState([]);

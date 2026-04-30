@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogIn } from 'lucide-react';
-import './Login.css';
+import './styles/Login.css';
 
 const Login = ({ setAuth }) => {
   const [usuario, setUsuario] = useState('');

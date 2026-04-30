@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { UserPlus, User } from 'lucide-react';
-import './Users.css';
+import './styles/Users.css';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
