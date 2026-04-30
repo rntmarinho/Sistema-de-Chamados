@@ -1,6 +1,6 @@
 # backend/users/user_controller.py
 from flask import Blueprint, request, jsonify
-from users.user_service import create_user_service, get_user_service
+from users.user_service import create_user_service, get_all_users_service, get_user_service
 
 # Criação do Blueprint para o controlador de usuários
 user_controller = Blueprint('user_controller', __name__)
@@ -11,6 +11,12 @@ def create_user():
     user_data = request.get_json()
     create_user_service(user_data)
     return jsonify({"message": "Usuário criado com sucesso!"}), 201
+
+@user_controller.route('/users', methods=['GET'])
+def get_all_users():
+    users = get_all_users_service()
+    # Converte cada linha do banco (Row) em um dicionário para o JSON
+    return jsonify([dict(user) for user in users]), 200
 
 # Rota para obter informações de um usuário
 @user_controller.route('/users/<int:user_id>', methods=['GET'])

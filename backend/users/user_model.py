@@ -1,29 +1,27 @@
 # backend/users/user_model.py
+import sqlite3
+
+from database.conect_database import get_db_connection
+# backend/users/user_model.py
 from database.conect_database import get_db_connection
 
-# Função para criar um novo usuário
 def create_user(user_data):
-    """
-    Cria um novo usuário no banco de dados.
-    :param user_data: dicionário contendo os dados do usuário (usuario, senha, nome, solicitante)
-    """
     conn = get_db_connection()
     cursor = conn.cursor()
+    # O campo solicitante recebe 'sim' para comum e 'nao' para técnico
     cursor.execute("""
-        INSERT INTO tbl_users (usuario, senha, nome, solicitante)
-        VALUES (?, ?, ?, ?)
-    """, (user_data['usuario'], user_data['senha'], user_data['nome'], user_data['solicitante']))
+        INSERT INTO tbl_users (usuario, email, senha, nome, solicitante)
+        VALUES (?, ?, ?, ?, ?)
+    """, (user_data['usuario'], user_data['email'], user_data['senha'], 
+          user_data['nome'], user_data['solicitante']))
     conn.commit()
     conn.close()
 
-# Função para obter todos os usuários
 def get_all_users():
-    """
-    Retorna todos os usuários do banco de dados.
-    """
     conn = get_db_connection()
+    conn.row_factory = sqlite3.Row  # IMPORTANTE: Permite converter para dicionário
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tbl_users")
+    cursor.execute("SELECT id, usuario, email, nome, solicitante FROM tbl_users")
     users = cursor.fetchall()
     conn.close()
     return users
