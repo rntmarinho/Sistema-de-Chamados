@@ -25,18 +25,3 @@
   color: white;
 }
 
-.sidebar-footer {
-  margin-top: auto;
-}
-
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: none;
-  border: none;
-  color: #21967d;
-  cursor: pointer;
-  padding: 12px;
-  width: 100%;
-}

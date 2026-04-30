@@ -18,12 +18,11 @@ const Sidebar = () => {
         <a href="/users" className="nav-item">
           <Users size={20} /> Usuários
         </a>
+        <a href="/reports" className="nav-item">
+          <Users size={20} /> Relatorios
+        </a>
       </nav>
-      <div className="sidebar-footer">
-        <button className="logout-btn">
-          <LogOut size={20} /> Sair
-        </button>
-      </div>
+      
     </div>
   );
 };

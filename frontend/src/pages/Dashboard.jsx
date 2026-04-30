@@ -62,7 +62,11 @@ const Dashboard = () => {
             {tickets.filter(t => t.status === 'aberto').map(ticket => (
               <tr key={ticket.id}>
                 <td>#{ticket.id}</td>
-                <td>{ticket.assunto}</td>
+                <td>
+                   <Link to={`/tickets/${ticket.id}`} className="ticket-link">
+                    {ticket.assunto}
+                   </Link>
+                 </td>
                 <td><span className="badge">{ticket.status}</span></td>
                 <td>{ticket.prioridade}</td>
                 <td>{new Date(ticket.data_criacao).toLocaleDateString()}</td>

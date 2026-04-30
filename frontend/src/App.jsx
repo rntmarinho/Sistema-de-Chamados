@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import NewTicket from './pages/NewTicket';
+import TicketDetails from './pages/TicketDetails';
 import './App.css'; // Certifique-se de importar o CSS aqui
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/novo-chamado" element={<NewTicket />} />
+          <Route path="/tickets/:id" element={<TicketDetails />} />
         </Routes>
       </main>
     </div>

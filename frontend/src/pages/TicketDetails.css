@@ -1,0 +1,116 @@
+/* Container Principal */
+.ticket-details-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: #333;
+}
+
+/* Cabeçalho da Página */
+.page-header {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.page-header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Botão Voltar */
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid #ddd;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background-color: #f5f5f5;
+  border-color: #000;
+}
+
+/* Layout em Grid (Conteúdo + Lateral) */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Card Principal de Conteúdo */
+.detail-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.detail-card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #000;
+  margin-bottom: 1.5rem;
+}
+
+.description {
+  line-height: 1.6;
+  color: #555;
+  white-space: pre-wrap; /* Preserva quebras de linha da descrição */
+}
+
+/* Barra Lateral de Informações */
+.sidebar-info {
+  background: #000; /* Seguindo o padrão da Sidebar */
+  color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.info-item strong {
+  color: #aaa;
+  margin-right: 4px;
+}
+
+/* Estado de Carregamento */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-style: italic;
+  color: #666;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sidebar-info {
+    order: -1; /* Coloca a barra lateral no topo em telas pequenas */
+  }
+}
