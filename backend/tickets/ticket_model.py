@@ -1,23 +1,38 @@
 # backend/tickets/ticket_model.py
 from database.conect_database import get_db_connection
+import sqlite3
 
-# Função para criar um novo ticket
+
 def create_ticket(ticket):
     conn = get_db_connection()
     cursor = conn.cursor()
+    # Adicionado usuario_id no INSERT
     cursor.execute("""
-        INSERT INTO tbl_tickets (assunto, descricao, prioridade, status, categoria)
-        VALUES (?, ?, ?, ?, ?)
-    """, (ticket['assunto'], ticket['descricao'], ticket['prioridade'], ticket['status'], ticket['categoria']))
+        INSERT INTO tbl_tickets (assunto, descricao, prioridade, status, categoria, usuario_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        ticket['assunto'], 
+        ticket['descricao'], 
+        ticket['prioridade'], 
+        ticket.get('status', 'aberto'), 
+        ticket['categoria'],
+        ticket['usuario_id'] # Recebido do payload do frontend
+    ))
     conn.commit()
     conn.close()
 
-# Função para obter todos os tickets
 def get_all_tickets():
     conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tbl_tickets")
-    tickets = cursor.fetchall()
+    # Realiza um JOIN para trazer o nome do solicitante junto com os dados do ticket
+    cursor.execute("""
+        SELECT t.*, u.nome as solicitante_nome 
+        FROM tbl_tickets t
+        LEFT JOIN tbl_users u ON t.usuario_id = u.id
+        ORDER BY t.data_criacao DESC
+    """)
+    tickets = [dict(row) for row in cursor.fetchall()]
     conn.close()
     return tickets
 
@@ -46,5 +61,17 @@ def delete_ticket(ticket_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM tbl_tickets WHERE id = ?", (ticket_id,))
+    conn.commit()
+    conn.close()
+
+def update_ticket(ticket_id, data):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        UPDATE tbl_tickets 
+        SET assunto = ?, descricao = ?, prioridade = ?, status = ?, categoria = ?, usuario_id = ?
+        WHERE id = ?
+    """, (data['assunto'], data['descricao'], data['prioridade'], 
+          data['status'], data['categoria'], data['usuario_id'], ticket_id))
     conn.commit()
     conn.close()

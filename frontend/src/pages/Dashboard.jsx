@@ -53,13 +53,14 @@ const Dashboard = () => {
             <tr>
               <th>ID</th>
               <th>Assunto</th>
+              <th>Solicitante</th>
               <th>Status</th>
               <th>Prioridade</th>
               <th>Data de Criação</th>
             </tr>
           </thead>
           <tbody>
-            {tickets.filter(t => t.status === 'aberto').map(ticket => (
+            {tickets.filter(t => t.status === 'aberto' || 'Em Atendimento').map(ticket => (
               <tr key={ticket.id}>
                 <td>#{ticket.id}</td>
                 <td>
@@ -67,9 +68,10 @@ const Dashboard = () => {
                     {ticket.assunto}
                    </Link>
                  </td>
+                <td>{ticket.solicitante_nome || 'N/A'}</td> {/* Exibe o nome do usuário */}
                 <td><span className="badge">{ticket.status}</span></td>
                 <td>{ticket.prioridade}</td>
-                <td>{new Date(ticket.data_criacao).toLocaleDateString()}</td>
+                <td>{new Date(ticket.data_criacao).toLocaleDateString('pt-BR')}</td>
               </tr>
             ))}
           </tbody>
