@@ -14,7 +14,7 @@ const Login = ({ setAuth }) => {
   setErro('');
 
   try {
-    const response = await fetch('/api/login', {
+    const response = await fetch('https://sistema-de-chamados-production.up.railway.app/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ usuario, senha })
