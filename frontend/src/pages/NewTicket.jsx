@@ -120,9 +120,11 @@ const NewTicket = () => {
                 value={formData.categoria}
                 onChange={e => setFormData({...formData, categoria: e.target.value})}
               >
-                <option value="suporte">Suporte Técnico</option>
-                <option value="infra">Infraestrutura</option>
-                <option value="financeiro">Financeiro</option>
+                <option value="suporte">Cadastro de Forncedor</option>
+                <option value="infra">Acesso Inativo</option>
+                <option value="financeiro">Reset de Senha</option>
+                <option value="financeiro">Erro no sistema</option>
+                <option value="financeiro">Erro de Processo</option>
               </select>
             </div>
           </div>
