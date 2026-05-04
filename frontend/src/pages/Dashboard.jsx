@@ -9,7 +9,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Busca os tickets do backend (Flask)
-    fetch('/api/tickets')
+    fetch('https://sistema-de-chamados-production.up.railway.app/tickets')
       .then(res => res.json())
       .then(data => {
         setTickets(data);
