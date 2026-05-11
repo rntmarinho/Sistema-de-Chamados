@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Calendar, User, Info, Tag, AlertCircle, Clock } from 'lucide-react';
+import { ArrowLeft, Save, Calendar, User, Info, Tag, AlertCircle, Clock, Delete, DeleteIcon } from 'lucide-react';
 import './styles/TicketDetails.css';
 
 const TicketDetails = () => {
@@ -45,6 +45,25 @@ const TicketDetails = () => {
     }
   };
 
+  const handleDelete = async () => {
+  if (window.confirm("Tem certeza que deseja excluir este chamado permanentemente?")) {
+    try {
+      const response = await fetch(`/api/tickets/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        alert("Chamado excluído com sucesso!");
+        navigate('/'); // Redireciona para o Dashboard após excluir
+      } else {
+        alert("Erro ao excluir o chamado.");
+      }
+    } catch (err) {
+      console.error("Erro na requisição:", err);
+      alert("Erro de conexão com o servidor.");
+    }
+   }
+  };
+
   if (loading) return <div className="loading">Carregando informações...</div>;
 
   return (
@@ -60,6 +79,11 @@ const TicketDetails = () => {
         <div className="header-actions">
           <button onClick={handleSave} className="btn-save">
             <Save size={20} /> Salvar Alterações
+          </button>          
+        </div>
+        <div>
+          <button onClick={handleDelete} className="btn-delete" style={{ backgroundColor: '#dc3545', marginRight: '10px' }}>
+            <Delete size={20} /> Excluir Chamado
           </button>
         </div>
       </header>

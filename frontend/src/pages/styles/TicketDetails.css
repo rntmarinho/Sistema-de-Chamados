@@ -72,6 +72,23 @@
 .btn-save:hover {
   opacity: 0.9;
 }
+.btn-delete {
+  background: #f42303; /* Tonalidade esmeralda conforme solicitação */
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.btn-delete:hover {
+  opacity: 0.9;
+}
 
 /* ============================================================
    CARD DE CONTEÚDO ESTÁTICO (ASSUNTO E DESCRIÇÃO)

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Ticket, Users, PlusCircle, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, Ticket, Users, PlusCircle, BarChart3, CarrotIcon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
@@ -31,6 +31,9 @@ const Sidebar = () => {
 
         <Link to="/reports" className={isActive("/reports")}>
           <BarChart3 size={20} /> Relatórios
+        </Link>
+        <Link to="/categorias" className={isActive("/categorias")}>
+          <CarrotIcon size={20} /> Cadastro de Categorias
         </Link>
       </nav>
     </div>
