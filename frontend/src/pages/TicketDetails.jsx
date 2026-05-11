@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Calendar, User, Info, Tag, AlertCircle, Clock, Delete, DeleteIcon } from 'lucide-react';
+import { ArrowLeft, Save, Calendar, User, Info, Tag, AlertCircle, Clock, Trash2 } from 'lucide-react';
 import './styles/TicketDetails.css';
 
 const TicketDetails = () => {
@@ -8,23 +8,26 @@ const TicketDetails = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
+  const [categories, setCategories] = useState([]); // Estado para armazenar as categorias do banco
   const [formData, setFormData] = useState({
     assunto: '',
     descricao: '',
     prioridade: '',
     status: '',
-    categoria: '',
+    id_categoria: '', // Alterado para id_categoria para alinhar com o banco de dados
     usuario_id: ''
   });
 
   useEffect(() => {
-    // Carrega dados do ticket e lista de usuários
+    // Carrega dados do ticket, lista de usuários e categorias
     Promise.all([
       fetch(`/api/tickets/${id}`).then(res => res.json()),
-      fetch('/api/users').then(res => res.json())
-    ]).then(([ticketData, userData]) => {
+      fetch('/api/users').then(res => res.json()),
+      fetch('/api/categories').then(res => res.json()) // Busca categorias dinâmicas
+    ]).then(([ticketData, userData, categoryData]) => {
       setFormData(ticketData);
       setUsers(userData);
+      setCategories(Array.isArray(categoryData) ? categoryData : []);
       setLoading(false);
     }).catch(err => console.error("Erro ao carregar dados:", err));
   }, [id]);
@@ -46,22 +49,22 @@ const TicketDetails = () => {
   };
 
   const handleDelete = async () => {
-  if (window.confirm("Tem certeza que deseja excluir este chamado permanentemente?")) {
-    try {
-      const response = await fetch(`/api/tickets/${id}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        alert("Chamado excluído com sucesso!");
-        navigate('/'); // Redireciona para o Dashboard após excluir
-      } else {
-        alert("Erro ao excluir o chamado.");
+    if (window.confirm("Tem certeza que deseja excluir este chamado permanentemente?")) {
+      try {
+        const response = await fetch(`/api/tickets/${id}`, {
+          method: 'DELETE',
+        });
+        if (response.ok) {
+          alert("Chamado excluído com sucesso!");
+          navigate('/');
+        } else {
+          alert("Erro ao excluir o chamado.");
+        }
+      } catch (err) {
+        console.error("Erro na requisição:", err);
+        alert("Erro de conexão com o servidor.");
       }
-    } catch (err) {
-      console.error("Erro na requisição:", err);
-      alert("Erro de conexão com o servidor.");
     }
-   }
   };
 
   if (loading) return <div className="loading">Carregando informações...</div>;
@@ -69,27 +72,32 @@ const TicketDetails = () => {
   return (
     <div className="ticket-details-container">
       <header className="page-header">
-        <button onClick={() => navigate(-1)} className="btn-back">
-          <ArrowLeft size={20} /> Voltar
-        </button>
-        <div className="header-title">
-          <h1>Chamado #{id}</h1>
-          <span className={`badge-status-top ${formData.status}`}>{formData.status}</span>
-        </div>
-        <div className="header-actions">
-          <button onClick={handleSave} className="btn-save">
-            <Save size={20} /> Salvar Alterações
-          </button>          
-        </div>
-        <div>
-          <button onClick={handleDelete} className="btn-delete" style={{ backgroundColor: '#dc3545', marginRight: '10px' }}>
-            <Delete size={20} /> Excluir Chamado
-          </button>
-        </div>
-      </header>
+  <button onClick={() => navigate(-1)} className="btn-back">
+    <ArrowLeft size={20} /> Voltar
+  </button>
+  
+  <div className="header-title">
+    <h1>Chamado #{id}</h1>
+    <span className={`badge-status-top ${formData.status}`}>{formData.status}</span>
+  </div>
+
+  {/* Agrupe todos os botões de ação aqui */}
+  <div className="header-actions">
+    <button 
+      onClick={handleDelete} 
+      className="btn-delete" 
+      style={{ backgroundColor: '#dc3545', color: 'white' }}
+    >
+      <Trash2 size={20} /> Excluir Chamado
+    </button>
+    
+    <button onClick={handleSave} className="btn-save">
+      <Save size={20} /> Salvar Alterações
+    </button>          
+  </div>
+</header>
 
       <div className="details-grid">
-        {/* Lado Esquerdo: Conteúdo Fixo (Não editável) */}
         <div className="main-content">
           <div className="static-card">
             <label className="section-label"><Info size={16} /> Detalhes do Chamado</label>
@@ -100,7 +108,6 @@ const TicketDetails = () => {
           </div>
         </div>
 
-        {/* Lado Direito: Atributos Editáveis */}
         <aside className="sidebar-info">
           <div className="info-group">
             <label><User size={16} /> Solicitante</label>
@@ -141,13 +148,14 @@ const TicketDetails = () => {
           <div className="info-group">
             <label><Tag size={16} /> Categoria</label>
             <select 
-              value={formData.categoria} 
-              onChange={e => setFormData({...formData, categoria: e.target.value})}
+              value={formData.id_categoria} 
+              onChange={e => setFormData({...formData, id_categoria: e.target.value})}
+              required
             >
-              <option value="suporte">Suporte Técnico</option>
-              <option value="infra">Infraestrutura</option>
-              <option value="financeiro">Financeiro</option>
-              <option value="sistemas">Sistemas</option>
+              <option value="">Selecione uma categoria...</option>
+              {categories.map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+              ))}
             </select>
           </div>
 

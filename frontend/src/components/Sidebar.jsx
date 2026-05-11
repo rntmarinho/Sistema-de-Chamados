@@ -10,7 +10,10 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h2>Sistema de Chamados</h2>
+      
+        <img src="/public/consominas.png" alt="Logo" className="logo" />      
+      
+      
       <nav>
         <Link to="/" className={isActive("/")}>
           <LayoutDashboard size={20} /> Painel Inicial

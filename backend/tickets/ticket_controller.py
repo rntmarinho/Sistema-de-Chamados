@@ -34,10 +34,7 @@ def update_ticket(ticket_id):
     return jsonify({"message": "Ticket atualizado com sucesso!"}), 200
 
 # Rota para excluir um ticket
-@ticket_controller.route('/tickets/<int:ticket_id>', methods=['DELETE'])
-def delete_ticket(ticket_id):
-    delete_ticket_service(ticket_id)
-    return jsonify({"message": "Ticket excluído com sucesso!"}), 200
+
 
 @ticket_controller.route('/tickets/<int:ticket_id>', methods=['PUT'])
 def update_ticket_route(ticket_id):

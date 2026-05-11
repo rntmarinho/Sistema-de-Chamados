@@ -1,40 +1,46 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Send, ArrowLeft, Info, Users } from 'lucide-react';
+import { Send, ArrowLeft, Info, Users, Tag } from 'lucide-react';
 import './styles/NewTicket.css';
 
 const NewTicket = () => {
   const navigate = useNavigate();
-  const [users, setUsers] = useState([]); // Lista de usuários para o select
+  const [users, setUsers] = useState([]); 
+  const [categories, setCategories] = useState([]); // Novo estado para categorias dinâmicas
   
   const [formData, setFormData] = useState({
     assunto: '',
     descricao: '',
     prioridade: 'baixa',
-    categoria: 'suporte',
+    id_categoria: '', // Alterado para id_categoria para refletir o banco
     status: 'aberto',
-    usuario_id: '' // ID do solicitante selecionado
+    usuario_id: '' 
   });
 
   useEffect(() => {
-    // 1. Carregar lista de usuários do backend
+    // 1. Carregar lista de usuários
     fetch('/api/users')
       .then(res => res.json())
       .then(data => {
         setUsers(data);
-        
-        // 2. Define o usuário logado como solicitante padrão inicial
         const loggedUser = JSON.parse(localStorage.getItem('user'));
         if (loggedUser) {
           setFormData(prev => ({ ...prev, usuario_id: loggedUser.id }));
         }
       })
       .catch(err => console.error("Erro ao carregar usuários:", err));
+
+    // 2. Carregar lista de categorias dinâmicas da tbl_categorias
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        setCategories(Array.isArray(data) ? data : []);
+      })
+      .catch(err => console.error("Erro ao carregar categorias:", err));
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('/api/tickets', {
         method: 'POST',
@@ -70,7 +76,6 @@ const NewTicket = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Campo Solicitante agora como SELECT (Alterável) */}
           <div className="form-group">
             <label>Solicitante</label>
             <div className="input-with-icon">
@@ -116,16 +121,21 @@ const NewTicket = () => {
 
             <div className="form-group">
               <label>Categoria</label>
-              <select 
-                value={formData.categoria}
-                onChange={e => setFormData({...formData, categoria: e.target.value})}
-              >
-                <option value="suporte">Cadastro de Forncedor</option>
-                <option value="infra">Acesso Inativo</option>
-                <option value="financeiro">Reset de Senha</option>
-                <option value="financeiro">Erro no sistema</option>
-                <option value="financeiro">Erro de Processo</option>
-              </select>
+              <div className="input-with-icon">
+                <Tag size={18} />
+                <select 
+                  value={formData.id_categoria}
+                  onChange={e => setFormData({...formData, id_categoria: e.target.value})}
+                  required
+                >
+                  <option value="">Selecione uma categoria...</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.nome}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
 
