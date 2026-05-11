@@ -1,0 +1,35 @@
+.reports-container { padding: 30px; background: #f8f9fa; min-height: 100vh; }
+
+.reports-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
+.reports-header h1 { color: #2c3e50; font-size: 1.8rem; margin: 0; }
+
+.tab-menu { display: flex; gap: 10px; }
+.tab-menu button { padding: 10px 20px; border: none; border-radius: 20px; cursor: pointer; background: #e9ecef; transition: 0.3s; font-weight: 500; }
+.tab-menu button.active { background: #3498db; color: white; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px; }
+.stat-card { padding: 25px; border-radius: 12px; display: flex; align-items: center; gap: 20px; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+.stat-card.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+.stat-card.orange { background: linear-gradient(135deg, #f39c12, #d35400); }
+.stat-card.green { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+
+.stat-icon { background: rgba(255,255,255,0.2); padding: 15px; border-radius: 50%; }
+.stat-data span { font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+.stat-data strong { font-size: 2.2rem; display: block; }
+
+.section-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+
+/* Gráfico de Barras Manual */
+.bar-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+.label { width: 120px; font-weight: 600; font-size: 0.85rem; color: #7f8c8d; }
+.bar-bg { flex: 1; background: #ecf0f1; height: 24px; border-radius: 12px; position: relative; }
+.bar-fill { background: #3498db; height: 100%; border-radius: 12px; display: flex; align-items: center; justify-content: flex-end; transition: 1s ease-in-out; }
+.perc-text { color: white; font-size: 0.7rem; margin-right: 10px; font-weight: bold; }
+
+.user-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+.user-stat-item { border: 1px solid #eee; padding: 15px; border-radius: 8px; }
+.mini-progress { background: #eee; height: 6px; border-radius: 3px; margin-top: 5px; }
+.mini-progress .fill { background: #2ecc71; height: 100%; border-radius: 3px; }
+
+.fade-in { animation: fadeIn 0.5s ease-in; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

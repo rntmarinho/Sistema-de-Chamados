@@ -11,6 +11,8 @@ import CreateUser from './pages/CreateUser';
 import Users from './pages/Users';
 import AllTickets from './pages/AllTickets';
 import TicketDetails from './pages/TicketDetails';
+import Reports from './pages/Reports';
+import ManageCategories from './pages/ManageCategories';
 
 import './App.css';
 
@@ -53,7 +55,8 @@ function App() {
                   <Route path="/users/novo" element={<CreateUser />} />
                   <Route path="/tickets" element={<AllTickets />} />
                   <Route path="/tickets/:id" element={<TicketDetails />} />
-                  {/* Fallback para o Dashboard */}
+                  <Route path="/relatorios" element={<Reports />} />
+                  <Route path="/categorias" element={<ManageCategories />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </main>

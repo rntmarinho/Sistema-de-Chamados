@@ -5,6 +5,8 @@ from users.user_controller import user_controller
 # Importa a função de background do novo serviço[cite: 1]
 from services.email_service import iniciar_daemon_email
 from dotenv import load_dotenv
+from categories.category_controller import category_controller
+
 import os
 
 app = Flask(__name__)
@@ -12,6 +14,7 @@ app = Flask(__name__)
 # Registrando os Blueprints (controladores)[cite: 1]
 app.register_blueprint(ticket_controller, url_prefix='/api')
 app.register_blueprint(user_controller, url_prefix='/api')
+app.register_blueprint(category_controller, url_prefix='/api')
 
 load_dotenv()
 
