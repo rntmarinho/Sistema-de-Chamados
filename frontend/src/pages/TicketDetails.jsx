@@ -8,28 +8,36 @@ const TicketDetails = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
-  const [categories, setCategories] = useState([]); // Estado para armazenar as categorias do banco
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     assunto: '',
     descricao: '',
     prioridade: '',
     status: '',
-    id_categoria: '', // Alterado para id_categoria para alinhar com o banco de dados
+    id_categoria: '', // Chave utilizada para sincronização com o select
     usuario_id: ''
   });
 
   useEffect(() => {
-    // Carrega dados do ticket, lista de usuários e categorias
+    // Carregamento paralelo de dados para otimização de performance
     Promise.all([
       fetch(`/api/tickets/${id}`).then(res => res.json()),
       fetch('/api/users').then(res => res.json()),
-      fetch('/api/categories').then(res => res.json()) // Busca categorias dinâmicas
+      fetch('/api/categories').then(res => res.json())
     ]).then(([ticketData, userData, categoryData]) => {
-      setFormData(ticketData);
+      // Normalização dos dados: o banco retorna 'categoria', 
+      // mas o estado do formulário consome 'id_categoria'
+      setFormData({
+        ...ticketData,
+        id_categoria: ticketData.categoria 
+      });
       setUsers(userData);
       setCategories(Array.isArray(categoryData) ? categoryData : []);
       setLoading(false);
-    }).catch(err => console.error("Erro ao carregar dados:", err));
+    }).catch(err => {
+      console.error("Erro ao carregar dados:", err);
+      setLoading(false);
+    });
   }, [id]);
 
   const handleSave = async () => {
@@ -37,14 +45,17 @@ const TicketDetails = () => {
       const response = await fetch(`/api/tickets/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData) // Envia o objeto contendo 'id_categoria'
       });
+
       if (response.ok) {
         alert("Alterações salvas com sucesso!");
         navigate('/');
+      } else {
+        alert("Erro ao salvar no servidor.");
       }
     } catch (err) {
-      alert("Erro ao salvar alterações.");
+      alert("Erro de conexão ao salvar alterações.");
     }
   };
 
@@ -61,7 +72,6 @@ const TicketDetails = () => {
           alert("Erro ao excluir o chamado.");
         }
       } catch (err) {
-        console.error("Erro na requisição:", err);
         alert("Erro de conexão com o servidor.");
       }
     }
@@ -72,30 +82,28 @@ const TicketDetails = () => {
   return (
     <div className="ticket-details-container">
       <header className="page-header">
-  <button onClick={() => navigate(-1)} className="btn-back">
-    <ArrowLeft size={20} /> Voltar
-  </button>
-  
-  <div className="header-title">
-    <h1>Chamado #{id}</h1>
-    <span className={`badge-status-top ${formData.status}`}>{formData.status}</span>
-  </div>
+        <button onClick={() => navigate(-1)} className="btn-back">
+          <ArrowLeft size={20} /> Voltar
+        </button>
+        
+        <div className="header-title">
+          <h1>Chamado #{id}</h1>
+          <span className={`badge-status-top ${formData.status}`}>{formData.status}</span>
+        </div>
 
-  {/* Agrupe todos os botões de ação aqui */}
-  <div className="header-actions">
-    <button 
-      onClick={handleDelete} 
-      className="btn-delete" 
-      style={{ backgroundColor: '#dc3545', color: 'white' }}
-    >
-      <Trash2 size={20} /> Excluir Chamado
-    </button>   
-             
-  </div>
-</header>
+        <div className="header-actions">
+          <button 
+            onClick={handleDelete} 
+            className="btn-delete"
+            title="Excluir permanentemente"
+          >
+            <Trash2 size={20} /> Excluir Chamado
+          </button> 
+        </div>
+      </header>
 
       <div className="details-grid">      
-        <div className="main-content">
+        <main className="main-content">
           <div className="static-card">
             <label className="section-label"><Info size={16} /> Detalhes do Chamado</label>
             <h2 className="static-subject">{formData.assunto}</h2>
@@ -103,13 +111,14 @@ const TicketDetails = () => {
               {formData.descricao}
             </div>
           </div>
-        </div>
+        </main>
 
         <aside className="sidebar-info">
           <div className="info-group">
-          <button onClick={handleSave} className="btn-save">
-            <Save size={20} /> Salvar Alterações
-          </button> 
+            <button onClick={handleSave} className="btn-save">
+              <Save size={20} /> Salvar Alterações
+            </button> 
+            
             <label><User size={16} /> Solicitante</label>
             <select 
               value={formData.usuario_id} 
@@ -148,21 +157,23 @@ const TicketDetails = () => {
           <div className="info-group">
             <label><Tag size={16} /> Categoria</label>
             <select 
-              value={formData.id_categoria} 
-              onChange={e => setFormData({...formData, id_categoria: e.target.value})}
-              required
-            >
-              <option value="">Selecione uma categoria...</option>
-              {categories.map(cat => (
-                <option key={cat.id} value={cat.id}>{cat.nome}</option>
-              ))}
-            </select>
+                  value={formData.id_categoria}
+                  onChange={e => setFormData({...formData, id_categoria: e.target.value})}
+                  required
+                >
+                  <option value="">Selecione uma categoria...</option>
+                  {categories.map(cat => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.nome}
+                    </option>
+                  ))}
+                </select>
           </div>
 
           <div className="info-footer">
             <div className="info-static-item">
               <Calendar size={14} />
-              <span>Aberto em: {new Date(formData.data_criacao).toLocaleString('pt-BR')}</span>
+              <span>Aberto em: {formData.data_criacao ? new Date(formData.data_criacao).toLocaleString('pt-BR') : 'N/A'}</span>
             </div>
           </div>
         </aside>
