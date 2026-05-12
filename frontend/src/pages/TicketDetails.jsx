@@ -89,15 +89,12 @@ const TicketDetails = () => {
       style={{ backgroundColor: '#dc3545', color: 'white' }}
     >
       <Trash2 size={20} /> Excluir Chamado
-    </button>
-    
-    <button onClick={handleSave} className="btn-save">
-      <Save size={20} /> Salvar Alterações
-    </button>          
+    </button>   
+             
   </div>
 </header>
 
-      <div className="details-grid">
+      <div className="details-grid">      
         <div className="main-content">
           <div className="static-card">
             <label className="section-label"><Info size={16} /> Detalhes do Chamado</label>
@@ -110,6 +107,9 @@ const TicketDetails = () => {
 
         <aside className="sidebar-info">
           <div className="info-group">
+          <button onClick={handleSave} className="btn-save">
+            <Save size={20} /> Salvar Alterações
+          </button> 
             <label><User size={16} /> Solicitante</label>
             <select 
               value={formData.usuario_id} 

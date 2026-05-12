@@ -13,12 +13,22 @@ const Dashboard = () => {
       .then(res => res.json())
       .then(data => {
         setTickets(data);
-        // Calcula estatísticas básicas
+        
+        // Calcula estatísticas dinâmicas baseadas nas novas regras
         const summary = data.reduce((acc, t) => {
           const status = t.status?.toLowerCase();
-          if (acc[status] !== undefined) acc[status]++;
+          
+          if (status === 'aberto') {
+            acc.aberto++;
+          } else if (status === 'fechado') {
+            acc.fechado++;
+          } else {
+            // Qualquer status que não seja aberto ou fechado é "Em Atendimento"
+            acc.atendimento++;
+          }
           return acc;
         }, { aberto: 0, atendimento: 0, fechado: 0 });
+
         setStats(summary);
       })
       .catch(err => console.error("Erro ao carregar chamados:", err));
@@ -33,26 +43,22 @@ const Dashboard = () => {
         </div>       
       </header>
 
-      
-      
-
       <section className="stats-cards">
         <div className="card"><h3>{stats.aberto}</h3><p>Em Aberto</p></div>
         <div className="card warning"><h3>{stats.atendimento}</h3><p>Em Atendimento</p></div>
         <div className="card success"><h3>{stats.fechado}</h3><p>Fechados</p></div>
       </section>
 
-      
       <div>
         <Link to="/novo-chamado" className="btn-primary">
           <Plus size={18} /> Abrir Novo Chamado
         </Link>
       </div>
 
-      <br></br>
+      <br />
 
       <section className="tickets-table-section">
-        <h2 className='titulo'>Chamados Recentes (Em Aberto)</h2>
+        <h2 className='titulo'>Chamados Recentes</h2>
         <table className="custom-table">
           <thead>
             <tr>
@@ -65,16 +71,17 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {tickets.filter(t => t.status === 'aberto' || 'Em Atendimento').map(ticket => (
+            {/* Filtra para não exibir tickets fechados no dashboard principal */}
+            {tickets.filter(t => t.status?.toLowerCase() !== 'fechado').map(ticket => (
               <tr key={ticket.id}>
                 <td>#{ticket.id}</td>
                 <td>
-                   <Link to={`/tickets/${ticket.id}`} className="ticket-link">
-                    {ticket.assunto}
-                   </Link>
-                 </td>
-                <td>{ticket.solicitante_nome || 'N/A'}</td> {/* Exibe o nome do usuário */}
-                <td><span className="badge">{ticket.status}</span></td>
+                    <Link to={`/tickets/${ticket.id}`} className="ticket-link">
+                     {ticket.assunto}
+                    </Link>
+                  </td>
+                <td>{ticket.solicitante_nome || 'N/A'}</td>
+                <td><span className={`badge ${ticket.status?.toLowerCase()}`}>{ticket.status}</span></td>
                 <td>{ticket.prioridade}</td>
                 <td>{new Date(ticket.data_criacao).toLocaleDateString('pt-BR')}</td>
               </tr>

@@ -9,11 +9,13 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path ? "nav-item active" : "nav-item";
 
   return (
+    
     <div className="sidebar">
+      <img src="/public/consominas.jpg" alt="Logo" className="logo" /> 
+
+      <br/>      
       
-        <img src="/public/consominas.png" alt="Logo" className="logo" />      
-      
-      
+      <div>
       <nav>
         <Link to="/" className={isActive("/")}>
           <LayoutDashboard size={20} /> Painel Inicial
@@ -40,6 +42,7 @@ const Sidebar = () => {
           <Tag size={20} /> Cadastro de Categorias
         </Link>
       </nav>
+      </div>
     </div>
   );
 };
