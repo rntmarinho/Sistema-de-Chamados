@@ -3,7 +3,7 @@ from database.conect_database import get_db_connection
 import sqlite3
 
 def create_ticket(ticket):
-    """Insere um novo chamado utilizando 'id_categoria' do payload."""
+
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -14,48 +14,55 @@ def create_ticket(ticket):
         ticket['descricao'], 
         ticket['prioridade'], 
         ticket.get('status', 'aberto'), 
-        ticket['id_categoria'],
+        ticket['categoria'],
         ticket['usuario_id']
     ))
     conn.commit()
     conn.close()
 
 def get_all_tickets():
-    """Retorna todos os tickets com nomes de solicitantes e categorias via JOIN."""
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("""
         SELECT 
             t.*, 
-            u.nome AS solicitante_nome, 
-            c.nome AS categoria_nome 
+            c.nome as categoria_nome,
+            u.nome as solicitante_nome
         FROM tbl_tickets t
+        LEFT JOIN tbl_categorias c ON t.categoria = c.id_categoria
         LEFT JOIN tbl_users u ON t.usuario_id = u.id
-        LEFT JOIN tbl_categorias c ON t.categoria = c.id
         ORDER BY t.data_criacao DESC
     """)
-    tickets = [dict(row) for row in cursor.fetchall()]
+    tickets = cursor.fetchall()
     conn.close()
-    return tickets
-
+    return [dict(t) for t in tickets]
+    
 def get_ticket_by_id(ticket_id):
-    """Recupera um ticket específico pelo ID."""
+    """Recupera um ticket específico com JOIN para trazer nomes de categoria/usuário."""
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM tbl_tickets WHERE id = ?", (ticket_id,))
+    # CORREÇÃO: Adicionado JOIN para que o TicketDetails receba 'categoria_nome' e 'solicitante_nome'
+    cursor.execute("""
+        SELECT 
+            t.*, 
+            c.nome as categoria_nome,
+            u.nome as solicitante_nome
+        FROM tbl_tickets t
+        LEFT JOIN tbl_categorias c ON t.categoria = c.id_categoria
+        LEFT JOIN tbl_users u ON t.usuario_id = u.id
+        WHERE t.id = ?
+    """, (ticket_id,))
     ticket = cursor.fetchone()
     conn.close()
-    return ticket
+    return dict(ticket) if ticket else None
 
 def update_ticket(ticket_id, data):
-    """
-    Atualiza os dados de um chamado.
-    Mapeia explicitamente 'id_categoria' do frontend para a coluna 'categoria'.
-    """
+    """Atualiza os dados do chamado usando os nomes de coluna corretos."""
     conn = get_db_connection()
     cursor = conn.cursor()
+    # CORREÇÃO: SET id_categoria = ? (em vez de categoria)
     cursor.execute("""
         UPDATE tbl_tickets 
         SET assunto = ?, 
@@ -70,7 +77,7 @@ def update_ticket(ticket_id, data):
         data['descricao'], 
         data['prioridade'], 
         data['status'], 
-        data.get('id_categoria'), 
+        data.get('categoria'), 
         data['usuario_id'], 
         ticket_id
     ))

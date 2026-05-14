@@ -12,7 +12,7 @@ const NewTicket = () => {
     assunto: '',
     descricao: '',
     prioridade: 'baixa',
-    id_categoria: '', // Alterado para id_categoria para refletir o banco
+    categoria: '', // Alterado para id_categoria para refletir o banco
     status: 'aberto',
     usuario_id: '' 
   });

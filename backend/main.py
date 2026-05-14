@@ -6,6 +6,7 @@ from users.user_controller import user_controller
 from services.email_service import iniciar_daemon_email
 from dotenv import load_dotenv
 from categories.category_controller import category_controller
+from tickets.message_controller import message_controller 
 
 import os
 
@@ -15,6 +16,7 @@ app = Flask(__name__)
 app.register_blueprint(ticket_controller, url_prefix='/api')
 app.register_blueprint(user_controller, url_prefix='/api')
 app.register_blueprint(category_controller, url_prefix='/api')
+app.register_blueprint(message_controller, url_prefix="/api") 
 
 load_dotenv()
 

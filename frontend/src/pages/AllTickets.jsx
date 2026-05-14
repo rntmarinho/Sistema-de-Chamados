@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Search, Ticket, Calendar, AlertCircle, User, Filter } from 'lucide-react';
+import { Search, Ticket, Calendar, AlertCircle, User } from 'lucide-react';
 import './styles/AllTickets.css';
 
 const AllTickets = () => {
@@ -12,7 +12,6 @@ const AllTickets = () => {
     fetch('/api/tickets')
       .then(res => res.json())
       .then(data => {
-        // Ordenação Inicial: Prioridade (Alta > Média > Baixa) e depois Data (Mais recente)
         const sortedData = sortTickets(data);
         setTickets(sortedData);
         setLoading(false);
@@ -20,25 +19,22 @@ const AllTickets = () => {
       .catch(err => console.error("Erro ao carregar chamados:", err));
   }, []);
 
-  // Função para definir o peso das prioridades para ordenação
   const priorityWeight = { 'alta': 3, 'media': 2, 'baixa': 1 };
 
   const sortTickets = (data) => {
     return [...data].sort((a, b) => {
-      // Primeiro por Prioridade
       if (priorityWeight[b.prioridade] !== priorityWeight[a.prioridade]) {
         return priorityWeight[b.prioridade] - priorityWeight[a.prioridade];
       }
-      // Depois por Data de Criação (Descendente)
       return new Date(b.data_criacao) - new Date(a.data_criacao);
     });
   };
 
-  // Lógica de Filtro (Busca por Assunto, Solicitante ou ID)
   const filteredTickets = tickets.filter(ticket => 
     ticket.assunto.toLowerCase().includes(searchTerm.toLowerCase()) ||
     ticket.solicitante_nome?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    ticket.id.toString().includes(searchTerm)
+    ticket.id.toString().includes(searchTerm) ||
+    ticket.categoria_nome?.toLowerCase().includes(searchTerm.toLowerCase()) // Adicionado filtro por nome de categoria
   );
 
   if (loading) return <div className="loading">Carregando lista de chamados...</div>;
@@ -55,7 +51,7 @@ const AllTickets = () => {
           <Search size={20} className="search-icon" />
           <input 
             type="text" 
-            placeholder="Pesquisar por assunto, solicitante ou ID..." 
+            placeholder="Pesquisar por assunto, solicitante, ID ou categoria..." 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -67,7 +63,7 @@ const AllTickets = () => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Assunto</th>
+              <th>Assunto / Categoria</th>
               <th>Solicitante</th>
               <th>Prioridade</th>
               <th>Status</th>
@@ -81,7 +77,8 @@ const AllTickets = () => {
                 <td className="id-col">#{ticket.id}</td>
                 <td className="subject-col">
                   <strong>{ticket.assunto}</strong>
-                  <span className="category-tag">{ticket.categoria}</span>
+                  {/* EXIBIÇÃO DO NOME DA CATEGORIA VINDO DO JOIN */}
+                  <span className="category-tag">{ticket.categoria_nome || 'Geral'}</span>
                 </td>
                 <td>
                   <div className="user-info-cell">
@@ -94,7 +91,7 @@ const AllTickets = () => {
                   </span>
                 </td>
                 <td>
-                  <span className={`status-pill ${ticket.status.replace(' ', '-')}`}>
+                  <span className={`status-pill ${ticket.status.replace(/\s+/g, '-')}`}>
                     {ticket.status}
                   </span>
                 </td>
